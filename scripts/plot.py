@@ -13,9 +13,8 @@ def main():
 
         points = data.get("points", [])
         if not points:
-            raise ValueError("Нет точек для отображения.")
+            raise ValueError("There are no points to display.")
 
-        # Организация данных по файлам и группам
         data_dict = defaultdict(lambda: defaultdict(list))
         for point in points:
             file = point["file"]
@@ -24,7 +23,6 @@ def main():
             y = point["y"]
             data_dict[file][group].append((x, y))
 
-        # Генерация графика
         plt.figure(figsize=(10, 8))
         color_map = plt.get_cmap('tab20')
         color_idx = 0
@@ -34,8 +32,8 @@ def main():
             for group, coords in groups.items():
                 xs, ys = zip(*coords)
                 color = color_map(color_idx % 20)
-                plt.scatter(xs, ys, color=color, label=f"{file} - Группа {group}")
-                legend_handles.append(mpatches.Patch(color=color, label=f"{file} - Группа {group}"))
+                plt.scatter(xs, ys, color=color, label=f"{file} - Group {group}")
+                legend_handles.append(mpatches.Patch(color=color, label=f"{file} - Group {group}"))
                 color_idx += 1
 
         plt.legend(handles=legend_handles, bbox_to_anchor=(1.05, 1), loc='upper left')
@@ -44,9 +42,9 @@ def main():
         plt.title('Точки из файлов')
         plt.tight_layout()
         plt.savefig('output.png')
-        print("График успешно сохранен в output.png")
+        print("The graph was successfully saved to output.png")
     except Exception as e:
-        print(f"Ошибка в скрипте Python: {e}", file=sys.stderr)
+        print(f"Error in Python script: {e}", file=sys.stderr)
         sys.exit(1)
 
 if __name__ == "__main__":
